@@ -3,7 +3,7 @@ import './Login.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import emailAction from '../actions';
+import { emailAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -17,7 +17,8 @@ class Login extends React.Component {
 
   correctEmailAndPassword = () => {
     const { email, password } = this.state;
-// google regex validate email
+    // google regex validate email
+    // https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     const emailLogin = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const checkingEmail = emailLogin.test(email);
 
