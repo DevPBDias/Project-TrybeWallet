@@ -1,0 +1,33 @@
+.form-login {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 300px;
+  justify-content: center;
+  margin: auto;
+  width: 300px;
+}
+
+.input-email{
+  background-color: rgb(202, 193, 193);
+  color: black;
+  margin: 5px;
+  padding: 3px;
+  width: 150px;
+}
+
+.input-password{
+  background-color: rgb(202, 193, 193);
+  color: black;
+  margin: 5px;
+  padding: 3px;
+  width: 150px;
+}
+
+.button {
+  background-color: green;
+  color: antiquewhite;
+  margin: 5px;
+  padding: 3px;
+  width: 150px;
+}

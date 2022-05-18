@@ -1,12 +1,8 @@
-export const ACTION_USER = 'ACTION_USER';
-export const ACTION_WALLET = 'ACTION_WALLET';
+export const ADD_EMAIL = 'ADD_EMAIL';
 
-export const userAction = (state) => ({
-  type: ACTION_USER,
-  state,
+const emailAction = (email) => ({
+  type: ADD_EMAIL,
+  payload: email,
 });
 
-export const walletAction = (state) => ({
-  type: ACTION_WALLET,
-  state,
-});
+export default emailAction;
