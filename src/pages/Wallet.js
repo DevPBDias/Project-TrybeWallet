@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { connect } from 'react-redux';
 import './Wallet.css';
 import { getCurrencyThunk } from '../actions';
+import Form from '../components/Form';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -14,29 +15,31 @@ class Wallet extends React.Component {
     const { email, currencies } = this.props;
     console.log(currencies);
     return (
-      <div className="header">
-        <header
-          className="email-header"
-          data-testid="email-field"
-        >
-          {email}
-        </header>
-        <div className="money-header">
-          <p
-            className="currency-header"
-            data-testid="header-currency-field"
+      <section>
+        <div className="header">
+          <header
+            className="email-header"
+            data-testid="email-field"
           >
-            {currencies}
-          </p>
-          <p
-            className="expenses-header"
-            data-testid="total-field"
-          >
-            0
-          </p>
+            {email}
+          </header>
+          <div className="money-header">
+            <p
+              className="currency-header"
+              data-testid="header-currency-field"
+            >
+              {currencies}
+            </p>
+            <p
+              className="expenses-header"
+              data-testid="total-field"
+            >
+              0
+            </p>
+          </div>
         </div>
-
-      </div>);
+        <Form />
+      </section>);
   }
 }
 
@@ -54,7 +57,7 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrencyProp: PropTypes.func.isRequired,
   // expenses: PropTypes.number.isRequired,
-  currencies: PropTypes.string.isRequired,
+  currencies: PropTypes.arrayOf(string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
