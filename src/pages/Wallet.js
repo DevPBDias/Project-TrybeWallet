@@ -12,8 +12,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
-    console.log(currencies);
+    const { email } = this.props;
     return (
       <section>
         <div className="header">
@@ -28,7 +27,7 @@ class Wallet extends React.Component {
               className="currency-header"
               data-testid="header-currency-field"
             >
-              {currencies}
+              BRL
             </p>
             <p
               className="expenses-header"
@@ -57,7 +56,7 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrencyProp: PropTypes.func.isRequired,
   // expenses: PropTypes.number.isRequired,
-  currencies: PropTypes.arrayOf(string).isRequired,
+  // currencies: PropTypes.arrayOf(string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
