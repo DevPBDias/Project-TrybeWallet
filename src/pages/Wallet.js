@@ -12,20 +12,6 @@ class Wallet extends React.Component {
     getCurrencyProp();
   }
 
-  // expensesSum = async () => {
-  //   const { expenses } = this.props;
-  //   const multiplierExpensesForCurrency = await expenses
-  //     .map((value) => ((value.value) * (value.exchangeRates[value.currency].ask)));
-  //   console.log(multiplierExpensesForCurrency);
-  //   const totalSum = await multiplierExpensesForCurrency.reduce((acumulator, current) => {
-  //     console.log('calculou');
-  //     return acumulator + current;
-  //   }, 0);
-  //   console.log(totalSum);
-
-  //   return totalSum.toFixed(2);
-  // }
-
   render() {
     const { expenses, email } = this.props;
     const multiplierExpensesForCurrency = expenses

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import './Form.css';
+import './Form.css';
 import { expenseAction } from '../actions';
 
 const CURRENCY_API = 'https://economia.awesomeapi.com.br/json/all';
@@ -10,7 +10,7 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: 0,
+      value: '',
       description: '',
       currency: '',
       method: '',
@@ -18,25 +18,9 @@ class Form extends React.Component {
     };
   }
 
-  // como reduzir msm essas funçoes todas handle??
-  handleChangeValue = ({ target }) => {
-    this.setState({ value: target.value });
-  }
-
-  handleChangeDescription = ({ target }) => {
-    this.setState({ description: target.value });
-  }
-
-  handleChangeCurrency = ({ target }) => {
-    this.setState({ currency: target.value });
-  }
-
-  handleChangeMethod = ({ target }) => {
-    this.setState({ method: target.value });
-  }
-
-  handleChangeTag = ({ target }) => {
-    this.setState({ tag: target.value });
+  // como reduzir msm essas funçoes todas handle?? com target.name
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value });
   }
 
   handleSubmit = async (event) => {
@@ -57,7 +41,7 @@ class Form extends React.Component {
     };
     await dispatch(expenseAction(expenses, goGoExpenses));
     this.setState({
-      value: 0,
+      value: '',
       description: '',
       currency: '',
       method: '',
@@ -69,12 +53,13 @@ class Form extends React.Component {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
-      <form>
+      <form className="form-currency">
         <label htmlFor="value-input">
           Valor:
           <input
             value={ value }
-            onChange={ this.handleChangeValue }
+            name="value"
+            onChange={ this.handleChange }
             className="input-value"
             id="value-input"
             type="text"
@@ -84,9 +69,10 @@ class Form extends React.Component {
         <label htmlFor="currency-input">
           Moeda:
           <select
+            name="currency"
             value={ currency }
             id="currency-input"
-            onChange={ this.handleChangeCurrency }
+            onChange={ this.handleChange }
           >
             {
             // https://www.codegrepper.com/code-examples/whatever/.map+select+option+jsx
@@ -97,10 +83,11 @@ class Form extends React.Component {
         <label htmlFor="method-input">
           Método de pagamento:
           <select
+            name="method"
             value={ method }
             id="method-input"
             data-testid="method-input"
-            onChange={ this.handleChangeMethod }
+            onChange={ this.handleChange }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -110,10 +97,11 @@ class Form extends React.Component {
         <label htmlFor="tag-input">
           Categoria:
           <select
+            name="tag"
             value={ tag }
             id="tag-input"
             data-testid="tag-input"
-            onChange={ this.handleChangeTag }
+            onChange={ this.handleChange }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -125,8 +113,9 @@ class Form extends React.Component {
         <label htmlFor="description-input">
           Descrição:
           <input
+            name="description"
             value={ description }
-            onChange={ this.handleChangeDescription }
+            onChange={ this.handleChange }
             className="input-description"
             id="description-input"
             type="text"
