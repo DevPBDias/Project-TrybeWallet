@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './Wallet.css';
 import { getCurrencyThunk } from '../actions';
@@ -11,8 +11,29 @@ class Wallet extends React.Component {
     getCurrencyProp();
   }
 
+  // expensesSum = async () => {
+  //   const { expenses } = this.props;
+  //   const multiplierExpensesForCurrency = await expenses
+  //     .map((value) => ((value.value) * (value.exchangeRates[value.currency].ask)));
+  //   console.log(multiplierExpensesForCurrency);
+  //   const totalSum = await multiplierExpensesForCurrency.reduce((acumulator, current) => {
+  //     console.log('calculou');
+  //     return acumulator + current;
+  //   }, 0);
+  //   console.log(totalSum);
+
+  //   return totalSum.toFixed(2);
+  // }
+
   render() {
-    const { email } = this.props;
+    const { expenses, email } = this.props;
+    const multiplierExpensesForCurrency = expenses
+      .map((value) => ((value.value) * (value.exchangeRates[value.currency].ask)));
+    // console.log(multiplierExpensesForCurrency);
+    const totalSum = multiplierExpensesForCurrency
+      .reduce((acumulator, current) => acumulator + current, 0);
+    // console.log(totalSum);
+
     return (
       <section>
         <div className="header">
@@ -33,7 +54,7 @@ class Wallet extends React.Component {
               className="expenses-header"
               data-testid="total-field"
             >
-              0
+              { totalSum.toFixed(2) }
             </p>
           </div>
         </div>
@@ -45,7 +66,6 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
-  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -55,8 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrencyProp: PropTypes.func.isRequired,
-  // expenses: PropTypes.number.isRequired,
-  // currencies: PropTypes.arrayOf(string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

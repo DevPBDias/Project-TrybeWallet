@@ -10,7 +10,6 @@ const INITIAL_USER_STATE = {
   currencies: [],
   expenses: [],
   error: '',
-  loading: false,
 };
 
 const wallet = (state = INITIAL_USER_STATE, action) => {
@@ -18,25 +17,21 @@ const wallet = (state = INITIAL_USER_STATE, action) => {
   case ADD_EXPENSE:
     return {
       ...state,
-      loading: false,
       expenses: action.payload,
     };
   case ADD_CURRENCY:
     return {
       ...state,
-      loading: false,
       currencies: action.payload,
     };
   case GET_API_SUCESS:
     return {
       ...state,
-      loading: true,
       error: '',
     };
   case GET_API_FAIL:
     return {
       ...state,
-      loading: false,
       error: 'Api não encontrada',
     };
   default:

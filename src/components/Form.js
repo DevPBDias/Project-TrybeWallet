@@ -1,23 +1,24 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import './Form.css';
-// import { getCurrencyThunk } from '../actions';
+import { expenseAction } from '../actions';
+
+const CURRENCY_API = 'https://economia.awesomeapi.com.br/json/all';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-    //   id: 0,
-      value: '',
+      value: 0,
       description: '',
       currency: '',
       method: '',
       tag: '',
-    //   exchangeRates: '',
     };
   }
 
+  // como reduzir msm essas funçoes todas handle??
   handleChangeValue = ({ target }) => {
     this.setState({ value: target.value });
   }
@@ -38,17 +39,37 @@ class Form extends React.Component {
     this.setState({ tag: target.value });
   }
 
-  // handleChangeExchangeRates = ({ target }) => {
-  //     const { exchangeRates } = this.state;
-
-  // }
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const { expenses, dispatch } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    // criar um variavel com o obj montado, prontinho para mandar para via dispatch para o reducer
+    const response = await fetch(CURRENCY_API);
+    const currencyData = await response.json();
+    const goGoExpenses = {
+      id: (expenses.length),
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: currencyData,
+    };
+    await dispatch(expenseAction(expenses, goGoExpenses));
+    this.setState({
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    });
+  }
 
   render() {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
-    console.log(this.state);
     return (
-      <section>
+      <form>
         <label htmlFor="value-input">
           Valor:
           <input
@@ -81,9 +102,9 @@ class Form extends React.Component {
             data-testid="method-input"
             onChange={ this.handleChangeMethod }
           >
-            <option value="money">Dinheiro</option>
-            <option value="creditCard">Cartão de crédito</option>
-            <option value="debitCard">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag-input">
@@ -94,11 +115,11 @@ class Form extends React.Component {
             data-testid="tag-input"
             onChange={ this.handleChangeTag }
           >
-            <option value="food">Alimentação</option>
-            <option value="hobby">Lazer</option>
-            <option value="job">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
         <label htmlFor="description-input">
@@ -112,16 +133,20 @@ class Form extends React.Component {
             data-testid="description-input"
           />
         </label>
-      </section>);
+        <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
+      </form>);
   }
 }
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 Form.propTypes = {
-  currencies: PropTypes.arrayOf(string).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(Form);

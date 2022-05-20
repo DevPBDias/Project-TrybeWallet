@@ -11,9 +11,9 @@ export const emailAction = (email) => ({
   payload: email,
 });
 
-export const expenseAction = (expense) => ({
+export const expenseAction = (oldExpsense, newExpense) => ({
   type: ADD_EXPENSE,
-  payload: expense,
+  payload: [...oldExpsense, newExpense],
 });
 
 export const currencyAction = (currency) => ({
@@ -38,15 +38,10 @@ export const getCurrencyThunk = () => {
       const currency = await response.json();
 
       const currencyWithoutUSDT = Object.keys(currency);
-      // const currencyValues = Object.keys.values(currency);
       const currencyUSDT = currencyWithoutUSDT.splice(1, 1);
       console.log(currencyUSDT);
-      // console.log(currencyValues);
-      // list.splice(0, 2);
-      // Starting at index position 0, remove two elements ["bar", "baz"] and retains ["foo", "qux"].
 
       dispatch(currencyAction(currencyWithoutUSDT));
-      // dispatch(currencyAction(currencyValues));
     } catch (error) {
       dispatch(getApiFail());
     }
