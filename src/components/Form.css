@@ -9,7 +9,7 @@
 
 input {
   margin: 10px;
-  padding: 5px
+  padding: 5px;
 }
 
 select {
@@ -17,7 +17,7 @@ select {
   color: yellowgreen;
   cursor: pointer;
   margin: 10px;
-  padding: 5px
+  padding: 5px;
 }
 
 button {
